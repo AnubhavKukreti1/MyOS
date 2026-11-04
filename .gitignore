@@ -1,0 +1,19 @@
+# Build output
+build/
+dist/
+*.o
+*.elf
+*.bin
+*.iso
+*.img
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+*.swp
+
+# Temporary files
+*.log
+*.tmp
