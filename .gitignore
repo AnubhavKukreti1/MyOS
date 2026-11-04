@@ -1,19 +1,12 @@
-# Build output
-build/
-dist/
+# Limine source and archives
+limine-12.9.6/
+limine-12.9.6.tar.gz
+
+# Build outputs and objects
 *.o
 *.elf
 *.bin
 *.iso
 *.img
-
-# macOS
-.DS_Store
-
-# Editor
-.vscode/
-*.swp
-
-# Temporary files
-*.log
-*.tmp
+host/
+host-build/
