@@ -119,3 +119,11 @@ size_t pmm_get_free_memory(void) {
 size_t pmm_get_used_memory(void) {
     return g_total_usable_memory - pmm_get_free_memory();
 }
+
+bool pmm_try_free(uintptr_t phys_addr) {
+    size_t frame = phys_addr / PAGE_SIZE;
+    if (frame >= pmm_total_frames) return false;
+    
+    // Check if it is marked as used and safe to inspect
+    return bitmap_test(frame);
+}
