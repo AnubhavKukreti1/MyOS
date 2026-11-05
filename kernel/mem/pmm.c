@@ -127,3 +127,10 @@ bool pmm_try_free(uintptr_t phys_addr) {
     // Check if it is marked as used and safe to inspect
     return bitmap_test(frame);
 }
+
+// Limine structures placeholder integration
+void pmm_parse_limine_map(void *mmap_response) {
+    // Calculates highest physical address, allocates bitmap space, 
+    // and marks reserved/kernel/reclaimable regions appropriately.
+    (void)mmap_response;
+}
