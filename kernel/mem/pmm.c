@@ -39,3 +39,8 @@ static int64_t bitmap_find_first_free(size_t count) {
     }
     return -1;
 }
+
+void pmm_init(void *mmap_request_response) {
+    // Stub for memory map parsing
+    (void)mmap_request_response;
+}
