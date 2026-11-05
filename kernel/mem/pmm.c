@@ -159,3 +159,5 @@ void pmm_run_tests(void) {
         pmm_free_frame(f2);
     }
 }
+
+// Hooked into kernel_main()
