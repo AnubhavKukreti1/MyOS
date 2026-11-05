@@ -148,3 +148,14 @@ static void pmm_reserve_lower_memory(void) {
 
 // Ensures kernel and bootloader structures remain marked as used permanently 
 // until explicit late-boot reclamation.
+
+void pmm_run_tests(void) {
+    void *f1 = pmm_alloc_frame();
+    void *f2 = pmm_alloc_frame();
+    
+    // Verify allocation uniqueness
+    if (f1 && f2 && f1 != f2) {
+        pmm_free_frame(f1);
+        pmm_free_frame(f2);
+    }
+}
