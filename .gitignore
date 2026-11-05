@@ -1,12 +1,12 @@
-# Limine source and archives
-limine-12.9.6/
-limine-12.9.6.tar.gz
+# Build artifacts
+build/
+disk.img
+myos.iso
+iso_root/
 
-# Build outputs and objects
+# Editor
+.vscode/
+
+# Object and dependency files
 *.o
-*.elf
-*.bin
-*.iso
-*.img
-host/
-host-build/
+*.d
