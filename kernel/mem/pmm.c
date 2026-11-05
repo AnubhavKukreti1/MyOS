@@ -71,3 +71,20 @@ void pmm_free_frame(void *phys_addr) {
         }
     }
 }
+
+void *pmm_alloc_frames(size_t count) {
+    if (count == 0) return NULL;
+    if (count == 1) return pmm_alloc_frame();
+
+    int64_t start_frame = bitmap_find_first_free(count);
+    if (start_frame < 0) {
+        return NULL;
+    }
+
+    for (size_t i = 0; i < count; ++i) {
+        bitmap_set((size_t)start_frame + i);
+    }
+    pmm_free_frames_count -= count;
+
+    return (void *)(start_frame * PAGE_SIZE);
+}
