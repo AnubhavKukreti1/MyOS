@@ -134,3 +134,14 @@ void pmm_parse_limine_map(void *mmap_response) {
     // and marks reserved/kernel/reclaimable regions appropriately.
     (void)mmap_response;
 }
+
+static void pmm_reserve_lower_memory(void) {
+    // Reserve lower 1MB (BIOS, IVT, VGA, BDA)
+    size_t lower_frames = 0x100000 / PAGE_SIZE;
+    for (size_t i = 0; i < lower_frames; ++i) {
+        if (!bitmap_test(i)) {
+            bitmap_set(i);
+            pmm_free_frames_count--;
+        }
+    }
+}
