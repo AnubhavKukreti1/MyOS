@@ -44,3 +44,13 @@ void pmm_init(void *mmap_request_response) {
     // Stub for memory map parsing
     (void)mmap_request_response;
 }
+
+void *pmm_alloc_frame(void) {
+    int64_t frame = bitmap_find_first_free(1);
+    if (frame < 0) {
+        return NULL; // Out of memory
+    }
+    bitmap_set((size_t)frame);
+    pmm_free_frames_count--;
+    return (void *)(frame * PAGE_SIZE);
+}
