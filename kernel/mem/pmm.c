@@ -145,3 +145,6 @@ static void pmm_reserve_lower_memory(void) {
         }
     }
 }
+
+// Ensures kernel and bootloader structures remain marked as used permanently 
+// until explicit late-boot reclamation.
