@@ -18,3 +18,24 @@ static inline void bitmap_clear(size_t bit) {
 static inline bool bitmap_test(size_t bit) {
     return (pmm_bitmap[INDEX_FROM_BIT(bit)] & (1ULL << OFFSET_FROM_BIT(bit))) != 0;
 }
+
+static int64_t bitmap_find_first_free(size_t count) {
+    size_t starting_index = pmm_last_search_index;
+    size_t consecutive = 0;
+    size_t first_free = 0;
+
+    for (size_t i = 0; i < pmm_total_frames; ++i) {
+        size_t idx = (starting_index + i) % pmm_total_frames;
+        if (!bitmap_test(idx)) {
+            if (consecutive == 0) first_free = idx;
+            consecutive++;
+            if (consecutive == count) {
+                pmm_last_search_index = idx;
+                return (int64_t)first_free;
+            }
+        } else {
+            consecutive = 0;
+        }
+    }
+    return -1;
+}
