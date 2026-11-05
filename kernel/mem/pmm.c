@@ -88,3 +88,20 @@ void *pmm_alloc_frames(size_t count) {
 
     return (void *)(start_frame * PAGE_SIZE);
 }
+
+void pmm_free_frames(void *phys_addr, size_t count) {
+    if (!phys_addr || count == 0) return;
+    uintptr_t addr = (uintptr_t)phys_addr;
+    size_t start_frame = addr / PAGE_SIZE;
+
+    for (size_t i = 0; i < count; ++i) {
+        size_t frame = start_frame + i;
+        if (frame < pmm_total_frames && bitmap_test(frame)) {
+            bitmap_clear(frame);
+            pmm_free_frames_count++;
+        }
+    }
+    if (start_frame < pmm_last_search_index) {
+        pmm_last_search_index = start_frame;
+    }
+}
