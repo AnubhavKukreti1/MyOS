@@ -54,3 +54,20 @@ void *pmm_alloc_frame(void) {
     pmm_free_frames_count--;
     return (void *)(frame * PAGE_SIZE);
 }
+
+void pmm_free_frame(void *phys_addr) {
+    uintptr_t addr = (uintptr_t)phys_addr;
+    size_t frame = addr / PAGE_SIZE;
+
+    if (frame >= pmm_total_frames) {
+        return; // Out of bounds
+    }
+
+    if (bitmap_test(frame)) {
+        bitmap_clear(frame);
+        pmm_free_frames_count++;
+        if (frame < pmm_last_search_index) {
+            pmm_last_search_index = frame;
+        }
+    }
+}
