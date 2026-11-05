@@ -105,3 +105,17 @@ void pmm_free_frames(void *phys_addr, size_t count) {
         pmm_last_search_index = start_frame;
     }
 }
+
+static size_t g_total_usable_memory = 0;
+
+size_t pmm_get_total_memory(void) {
+    return g_total_usable_memory;
+}
+
+size_t pmm_get_free_memory(void) {
+    return pmm_free_frames_count * PAGE_SIZE;
+}
+
+size_t pmm_get_used_memory(void) {
+    return g_total_usable_memory - pmm_get_free_memory();
+}
